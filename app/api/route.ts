@@ -33,7 +33,7 @@ export async function GET() {
     let topLevelComments = comments.filter(
       (comment) => !comment.parentCommentId
     );
-    return new Response(JSON.stringify(topLevelComments));
+    return new Response(JSON.stringify(commentsById));
   } catch (err) {
     return new Response("failed", { status: 500 });
   }

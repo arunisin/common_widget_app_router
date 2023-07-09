@@ -4,16 +4,6 @@ import Comment from "@/components/Comment";
 import { CommentsByIdProps } from "./api/route";
 import { set } from "mongoose";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
 export default function Home() {
   const [comments, setComments] = useState<CommentsByIdProps[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -54,19 +44,10 @@ export default function Home() {
     <main>
       <input type="text" ref={inputRef} />
       <button onClick={postData}>fetch data</button>
-      {comments.map((comment, index) => (
-        <Card key={index}>
-          <CardContent>{comment.body}</CardContent>
-          {comment.replies && comment.replies.length > 0 && (
-            <div>
-              <h4>Replies:</h4>
-              {comment.replies.map((reply, replyIndex) => (
-                <p key={replyIndex}>{reply.body}</p>
-              ))}
-            </div>
-          )}
-        </Card>
+      {Object.values(comments).map((comment, index) => (
+        <Comment comment={comment.body} key={index} id={comment._id} />
       ))}
+       {/* <Comment comment={"gassd"} id="sss" /> */}
     </main>
   );
 }
