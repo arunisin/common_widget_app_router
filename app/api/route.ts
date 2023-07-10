@@ -12,26 +12,22 @@ export async function GET() {
     await connectToDB();
 
     const comments = await Comment.find({});
-    // console.log(comments);
 
     let commentsById: CommentsByIdProps = {};
 
-    comments.forEach(comment => {
-      commentsById[comment._id] = {...comment, replies: []};
+    comments.forEach((comment) => {
+      commentsById[comment._id] = { ...comment, replies: [] };
     });
-    
+
     // Build the replies arrays for each comment
-    comments.forEach(comment => {
+    comments.forEach((comment) => {
       if (comment.parentCommentId && commentsById[comment.parentCommentId]) {
-        commentsById[comment.parentCommentId].replies.push(commentsById[comment._id]);
+        commentsById[comment.parentCommentId].replies.push(
+          commentsById[comment._id]
+        );
       }
     });
 
-    // console.log(commentsById);
-
-    // let topLevelComments = comments.filter(
-    //   (comment) => !comment.parentCommentId
-    // );
     return new Response(JSON.stringify(commentsById));
   } catch (err) {
     return new Response("failed", { status: 500 });

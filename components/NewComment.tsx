@@ -8,23 +8,34 @@ import { cn } from "@/lib/utils";
 interface NewCommentProps extends React.HTMLAttributes<HTMLDivElement> {
   parentId: string;
   onSave: () => void;
+  onCancel: () => void;
 }
 
-const NewComment: FC<NewCommentProps> = ({ parentId, ...props }) => {
+const NewComment: FC<NewCommentProps> = ({
+  parentId,
+  onSave,
+  onCancel,
+  ...props
+}) => {
   const [NewComment, setNewComment] = useState("");
 
   const handleSave = async () => {
     try {
-      fetch("/api/comment/new", {
+      await fetch("/api/comment/new", {
         method: "POST",
         body: JSON.stringify({
           body: NewComment,
           parentCommentId: parentId,
         }),
       });
+      onSave();
     } catch (error) {
       console.log(error, " from POST");
     }
+  };
+
+  const handleCancel = () => {
+    onCancel();
   };
 
   return (
@@ -35,6 +46,7 @@ const NewComment: FC<NewCommentProps> = ({ parentId, ...props }) => {
         className="mb-5 rounded-sm"
       />
       <div className=" flex gap-2 justify-end">
+        <Button onClick={handleCancel}>Cancel</Button>
         <Button onClick={handleSave}>save</Button>
       </div>
     </Card>
