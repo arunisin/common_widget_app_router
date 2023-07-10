@@ -12,7 +12,7 @@ export async function GET() {
     await connectToDB();
 
     const comments = await Comment.find({});
-    console.log(comments);
+    // console.log(comments);
 
     let commentsById: CommentsByIdProps = {};
 

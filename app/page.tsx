@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [comments, setComments] = useState<CommentsByIdProps[]>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const postData = async () => {
     if (!inputRef.current) return console.log("no input");
@@ -46,15 +46,17 @@ export default function Home() {
   useEffect((   ) => {console.log(comments, ' is the comments')},[comments])
 
   return (
-    <main>
-      <Card>
+    <main className=" flex flex-col gap-3 px-36 pt-36">
+      <Card className=" text-black p-5 flex flex-col gap-3">
         <CardTitle> add a new comment</CardTitle>
-        <CardContent>
+        <CardContent className="flex flex-col gap-3">
            
-            <Input type="text" ref={inputRef} />
-            <Button onClick={postData}>Save</Button>
+            {/* <Input type="text" ref={inputRef} /> */}
+            <textarea placeholder=" write your comment" ref={inputRef} className="h-32 border rounded-sm border-gray-500"/>
+            <Button onClick={postData} className="w-64">Save</Button>
         </CardContent>
       </Card>
+      <hr/>
       {Object.values(comments).map((comment, index) => (
        comment.replies.length<1 &&<Comment comment={comment._doc.body} key={index} id={comment._doc._id} replies={comment.replies}/>
       ))}
