@@ -3,9 +3,7 @@ import Comment from "@/models/comments";
 import { comment } from "postcss";
 
 export async function PATCH(req: Request, { params }: any) {
-  // console.log(req, ' is the request')
   const body = await req.json();
-  // console.log(body);
   try {
     await connectToDB();
     const comment = await Comment.findById(params.id);
@@ -26,7 +24,7 @@ export async function PATCH(req: Request, { params }: any) {
 export const DELETE = async (req: Request, { params }: any) => {
   try {
     await connectToDB();
-
+    console.log(params.id, ' going to delete')
     // Find the prompt by ID and remove it
     await Comment.findByIdAndRemove(params.id);
 

@@ -16,23 +16,22 @@ export async function GET() {
 
     let commentsById: CommentsByIdProps = {};
 
-    for (let comment of comments) {
-      commentsById[comment._id] = { ...comment._doc, replies: [] };
-
-      for (let comment of comments) {
-        if (comment.parentCommentId) {
-          commentsById[comment.parentCommentId].replies.push(
-            commentsById[comment._id]
-          );
-        }
+    comments.forEach(comment => {
+      commentsById[comment._id] = {...comment, replies: []};
+    });
+    
+    // Build the replies arrays for each comment
+    comments.forEach(comment => {
+      if (comment.parentCommentId && commentsById[comment.parentCommentId]) {
+        commentsById[comment.parentCommentId].replies.push(commentsById[comment._id]);
       }
-    }
+    });
 
-    console.log(commentsById);
+    // console.log(commentsById);
 
-    let topLevelComments = comments.filter(
-      (comment) => !comment.parentCommentId
-    );
+    // let topLevelComments = comments.filter(
+    //   (comment) => !comment.parentCommentId
+    // );
     return new Response(JSON.stringify(commentsById));
   } catch (err) {
     return new Response("failed", { status: 500 });

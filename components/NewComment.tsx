@@ -15,7 +15,7 @@ const NewComment: FC<NewCommentProps> = ({ parentId, ...props }) => {
 
   const handleSave = async () => {
     try {
-      fetch("/api/new", {
+      fetch("/api/comment/new", {
         method: "POST",
         body: JSON.stringify({
           body: NewComment,
