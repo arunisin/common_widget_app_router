@@ -1,5 +1,3 @@
-// import clientPromise from "@/lib/mongoDb";
-import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDB } from "@/lib/database";
 import Comment from "@/models/comments";
 

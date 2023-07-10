@@ -1,6 +1,5 @@
 import { connectToDB } from "@/lib/database";
 import Comment from "@/models/comments";
-import { comment } from "postcss";
 
 export async function PATCH(req: Request, { params }: any) {
   const body = await req.json();
@@ -24,8 +23,7 @@ export async function PATCH(req: Request, { params }: any) {
 export const DELETE = async (req: Request, { params }: any) => {
   try {
     await connectToDB();
-    console.log(params.id, ' going to delete')
-    // Find the prompt by ID and remove it
+    console.log(params.id, " going to delete");
     await Comment.findByIdAndRemove(params.id);
 
     return new Response("Prompt deleted successfully", { status: 200 });
